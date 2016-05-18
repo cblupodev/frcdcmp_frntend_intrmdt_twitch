@@ -1,0 +1,87 @@
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="Free Web tutorials">
+    <meta name="keywords" content="HTML,CSS,XML,JavaScript">
+    <meta name="author" content="Hege Refsnes">
+    <meta name='viewport' content='width=device-width, minimum-scale=1.0, maximum-scale=1.0, initial-scale=1.0' user-scalable='no'>
+    <title>Title of the page</title>
+    <!-- Angular Material style sheet -->
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
+    <link href="style.css" rel='stylesheet'>
+</head>
+
+<body ng-app='myApp' ng-controller='mainController'>
+    <!-- Angular Material requires Angular.js Libraries -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-aria.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-messages.min.js"></script>
+    <!-- Angular Material Library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
+    <script src='script.js'></script>
+    <!--links to codepen and freecodecamp-->
+    <div id='links' layout-align="start start" flex>
+        <div layout='row'>
+            go to codepen project <a href='http://codepen.io/cblupodev/pen/eNKQyB' target='_blank'> [codepen.io]</a>
+        </div>
+        <div layout='row'>
+            go to freecodeamp assignment <a href='https://www.freecodecamp.com/challenges/use-the-twitchtv-json-api' target='_blank'> [freecodeamp.com]</a>
+        </div>
+    </div>
+    <md-content>
+        <section name='tabs' ng-click='captureType($event)'>
+            <button name='All'>All</button>
+            <button name='Online'>Online</button>
+            <button name='Offline'>Offline</button>
+        </section>
+        <!--<section name='search'>-->
+        <!--    <input type='search' ng-model='search'>-->
+        <!--</section>-->
+        <!--<section name='list'>-->
+        <!--    <ul name='all' class='show'>-->
+        <!--        <li ng-repeat="elem in gettwitchInfo({{$scope.type}}) | filter:search">-->
+        <!--            <div class='panel'>-->
+        <!--                <img ng-src={{elem.logo}}>-->
+        <!--                <div class='textPanel'>-->
+        <!--                    <span class='name'>{{elem.displayName}}</span>-->
+        <!--                    <br>-->
+        <!--                    <span class='streamingDetails'>{{elem.streamName || ''}}</span>-->
+        <!--                </div>-->
+        <!--                <i ng-if='elem.isStreaming' class="fa fa-check"></i>-->
+        <!--                <i ng-if='!elem.isStreaming' class="fa fa-exclamation"></i>-->
+        <!--            </div>-->
+        <!--        </li>-->
+        <!--    </ul>-->
+            <!--<ul name='online' class='hide'>-->
+            <!--    <li ng-repeat="elem in gettwitchInfo('online') | filter:search">-->
+            <!--        <div class='panel'>-->
+            <!--            <img ng-src={{elem.logo}}>-->
+            <!--            <div class='textPanel'>-->
+            <!--                <span class='name'>{{elem.displayName}}</span>-->
+            <!--                <br>-->
+            <!--                <span class='streamingDetails'>{{elem.streamName || ''}}</span>-->
+            <!--            </div>-->
+            <!--            <i ng-if='elem.isStreaming' class="fa fa-check"></i>-->
+            <!--        </div>-->
+            <!--    </li>-->
+            <!--</ul>-->
+            <!--<ul name='offline' class='hide'>-->
+            <!--    <li ng-repeat="elem in gettwitchInfo('offline') | filter:search">-->
+            <!--        <div class='panel'>-->
+            <!--            <img ng-src={{elem.logo}}>-->
+            <!--            <div class='textPanel'>-->
+            <!--                <span class='name'>{{elem.displayName}}</span>-->
+            <!--                <br>-->
+            <!--                <span class='streamingDetails'>{{elem.streamName || ''}}</span>-->
+            <!--            </div>-->
+            <!--            <i ng-if='!elem.isStreaming' class="fa fa-exclamation"></i>-->
+            <!--        </div>-->
+            <!--    </li>-->
+            <!--</ul>-->
+        <!--</section>-->
+    </md-content>
+</body>
+
+</html>
