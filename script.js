@@ -14,15 +14,17 @@ function l(message) {
 
 var myApp = angular.module('myApp', []);
 myApp.controller('mainController', ['$scope', '$http', function($scope, $http) {
+    
+    $scope.asdf = 'asd';
 
     $scope.twitchInfo = [];
-    $scope.names = ["freecodecamp", "storbeck", "terakilobyte", "habathcx","RobotCaleb","thomasballinger","noobs2ninjas","beohoff"];
+    $scope.names = ["freecodecamp", "storbeck", "terakilobyte", "habathcx","RobotCaleb","thomasballinger","noobs2ninjas","beohoff", "ogamingsc2", "sheevergaming", "cretetion"];
 
     // todo try and put this in the html
     $scope.captureType = function(e) {
         $scope.type = e.srcElement.name.toLowerCase();
 
-        // todo initiate a new twitch request
+        // filter based on type
     }
 
     // todo use $http.get instead of jquery
@@ -64,7 +66,7 @@ myApp.controller('mainController', ['$scope', '$http', function($scope, $http) {
                 .success(function(data) {
                     current.logo = data.logo;
                     current.displayName = data.display_name || "doesn't exist";
-                    l(current);
+                    $scope.twitchInfo.push(current);
                 })
                 .error(function(err) {
                     l(err);
