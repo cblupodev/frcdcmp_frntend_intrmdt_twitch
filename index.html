@@ -1,3 +1,4 @@
+<!doctype html>
 <html lang="en">
 
 <head>
@@ -6,10 +7,9 @@
     <meta name="keywords" content="HTML,CSS,XML,JavaScript">
     <meta name="author" content="Hege Refsnes">
     <meta name='viewport' content='width=device-width, minimum-scale=1.0, maximum-scale=1.0, initial-scale=1.0' user-scalable='no'>
-    <title>Title of the page</title>
     <!-- Angular Material style sheet -->
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
-    <link href="style.css" rel='stylesheet'>
+    <!--<link href="style.css" rel='stylesheet'>-->
 </head>
 
 <body ng-app='myApp' ng-controller='mainController' ng-view ng-cloak>
@@ -22,32 +22,35 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
     <script src='script.js'></script>
 
-    <!--links to codepen and freecodecamp-->
-    <div id='links' layout-align="start start" flex>
-        <div layout='row'>
-            go to codepen project <a href='http://codepen.io/cblupodev/pen/eNKQyB' target='_blank'> [codepen.io]</a>
+        <!--links to codepen and freecodecamp-->
+        <div id='links' layout-align="start start">
+            <div layout>
+                go to codepen project <a href='http://codepen.io/cblupodev/pen/eNKQyB' target='_blank'> [codepen.io]</a>
+            </div>
+            <div layout>
+                go to freecodeamp assignment <a href='https://www.freecodecamp.com/challenges/use-the-twitchtv-json-api' target='_blank'> [freecodeamp.com]</a>
+            </div>
         </div>
-        <div layout='row'>
-            go to freecodeamp assignment <a href='https://www.freecodecamp.com/challenges/use-the-twitchtv-json-api' target='_blank'> [freecodeamp.com]</a>
-        </div>
-    </div>
-    <md-content layout='column' layout-align='center center' '>
+    <md-content layout='column' layout-align='start center'>
         <section name='tabs' ng-click='captureType($event)' layout>
-            <button name='All'>All</button>
-            <button name='Online'>Online</button>
-            <button name='Offline'>Offline</button>
+            <md-button name='All'>All</md-button>
+            <md-button name='Online'>Online</md-button>
+            <md-button name='Offline'>Offline</md-button>
         </section>
-        <input type='search' ng-model='search'>
-        <md-list name='all'>
-            <md-list-item ng-repeat="elem in twitchInfo | filter:search">
-                <img ng-src={{elem.logo}} class='md-avatar'>
-                <div>
-                    <span>{{elem.displayName}}</span>
-                    <br>
-                    <span>{{elem.streamName || 'offline'}}</span>
-                </div>
-            </md-list-item>
-        </md-list>
+        <md-input-container>
+            <input type='search' ng-model='search'>
+        </md-input-container>
+        <div layout='column'>
+            <md-list>
+                <md-list-item ng-repeat="elem in twitchInfo | filter:search | orderBy:'displayName'" class='md-2-line'>
+                    <img ng-src={{elem.logo}} class='md-avatar'>
+                    <div class='md-list-item-text'>
+                        <p>{{elem.displayName}}</p>
+                        <p>{{elem.streamName || 'offline'}}</p>
+                    </div>
+                </md-list-item>
+            </md-list>
+        </div>
     </md-content>
 </body>
 

@@ -1,23 +1,26 @@
+// '{0}{1}'.lp_format('asdf', 1 + 2);
 if (!String.prototype.format) {
-    String.prototype.lp_format = function() {
-        var args = arguments;
-        return this.replace(/{(\d+)}/g, function(match, number) {
-            return typeof args[number] != 'undefined' ? args[number] : match;
-        });
-    };
+  String.prototype.lp_format = function() {
+    var args = arguments;
+    return this.replace(/{(\d+)}/g, function(match, number) { 
+      return typeof args[number] != 'undefined'
+        ? args[number]
+        : match
+      ;
+    });
+  };
 }
 
-function l(message) {
-    console.log(message);
+// shortcut for console.log()
+function l (message) {
+  console.log(message);
 }
 
 
-var myApp = angular.module('myApp', []);
+var myApp = angular.module('myApp', ['ngMaterial']);
 myApp.controller('mainController', ['$scope', '$http', function($scope, $http) {
-    
-    $scope.asdf = 'asd';
 
-    $scope.twitchInfo = [];
+    $scope.twitchInfo = []; // store info for twitch users
     $scope.names = ["freecodecamp", "storbeck", "terakilobyte", "habathcx","RobotCaleb","thomasballinger","noobs2ninjas","beohoff", "ogamingsc2", "sheevergaming", "cretetion"];
 
     // todo try and put this in the html
@@ -27,7 +30,6 @@ myApp.controller('mainController', ['$scope', '$http', function($scope, $http) {
         // filter based on type
     }
 
-    // todo use $http.get instead of jquery
     function asyncCollect() {
         // function updateOfflineAndOnline() {
         //     $scope.twitchInfoOffline = {};
@@ -65,8 +67,11 @@ myApp.controller('mainController', ['$scope', '$http', function($scope, $http) {
             $http.jsonp('https://api.twitch.tv/kraken/channels/{0}?callback=JSON_CALLBACK'.lp_format(val))
                 .success(function(data) {
                     current.logo = data.logo;
-                    current.displayName = data.display_name || "doesn't exist";
-                    $scope.twitchInfo.push(current);
+                    current.displayName = data.display_name;
+                    l(current.logo);
+                    if (current.logo !== null) {
+                        $scope.twitchInfo.push(current);
+                    }
                 })
                 .error(function(err) {
                     l(err);
