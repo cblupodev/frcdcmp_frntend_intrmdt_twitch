@@ -13,7 +13,10 @@ function l(message) {
 
 
 var myApp = angular.module('myApp', []);
-myApp.controller('mainController', ['$scope', function($scope) {
+myApp.controller('mainController', ['$scope', '$http', function($scope, $http) {
+
+    $scope.twitchInfo = [];
+    $scope.names = ["freecodecamp", "storbeck", "terakilobyte", "habathcx","RobotCaleb","thomasballinger","noobs2ninjas","beohoff"];
 
     // todo try and put this in the html
     $scope.captureType = function(e) {
@@ -24,20 +27,49 @@ myApp.controller('mainController', ['$scope', function($scope) {
 
     // todo use $http.get instead of jquery
     function asyncCollect() {
-        function updateOfflineAndOnline() {
-            $scope.twitchInfoOffline = {};
-            $scope.twitchInfoOnline = {};
-            for (var key in $scope.twitchInfo) {
-                if ($scope.twitchInfo[key].isStreaming) {
-                    $scope.twitchInfoOnline[key] = $scope.twitchInfo[key];
-                }
-                else {
-                    $scope.twitchInfoOffline[key] = $scope.twitchInfo[key];
-                }
-            }
-        }
+        // function updateOfflineAndOnline() {
+        //     $scope.twitchInfoOffline = {};
+        //     $scope.twitchInfoOnline = {};
+        //     for (var key in $scope.twitchInfo) {
+        //         if ($scope.twitchInfo[key].isStreaming) {
+        //             $scope.twitchInfoOnline[key] = $scope.twitchInfo[key];
+        //         }
+        //         else {
+        //             $scope.twitchInfoOffline[key] = $scope.twitchInfo[key];
+        //         }
+        //     }
+        // }
 
         $scope.names.forEach(function(val, idx) {
+
+            var current = {
+                valFromArray: val,
+                isStreaming: false,
+                streamName: '',
+                logo: '',
+                displayName: ''
+            }
+
+            $http.jsonp('https://api.twitch.tv/kraken/streams/{0}?callback=JSON_CALLBACK'.lp_format(val))
+                .success(function(data) {
+                    if (!!data.stream) {
+                        current.isStreaming = true;
+                        current.streamName = data.stream.game;
+                    }
+                })
+                .error(function(err) {
+                    l(`in error ${err}`);
+                })
+            $http.jsonp('https://api.twitch.tv/kraken/channels/{0}?callback=JSON_CALLBACK'.lp_format(val))
+                .success(function(data) {
+                    current.logo = data.logo;
+                    current.displayName = data.display_name || "doesn't exist";
+                    l(current);
+                })
+                .error(function(err) {
+                    l(err);
+                })
+
             // get streaming info
             // $.ajax({
             //     url: 'https://api.twitch.tv/kraken/streams/{0}'.lp_format(val),
@@ -70,6 +102,7 @@ myApp.controller('mainController', ['$scope', function($scope) {
             // });
         });
     }
+    asyncCollect();
 
     // $scope.names = ["admiral_bahroo", "freecodecamp", "storbeck", "terakilobyte", "habathcx","RobotCaleb","comster404","brunofin","thomasballinger","noobs2ninjas","beohoff"];
     // $scope.twitchInfo = {};
@@ -79,6 +112,7 @@ myApp.controller('mainController', ['$scope', function($scope) {
     //     $scope.twitchInfo[val] = {};
     // });
 
+    // create array for the info so ngreapeat can traverse it
     $scope.gettwitchInfo = function(type) {
         l(type);
         if (type === 'all') {
