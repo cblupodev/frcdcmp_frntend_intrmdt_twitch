@@ -21,9 +21,11 @@ var myApp = angular.module('myApp', ['ngMaterial']);
 myApp.controller('mainController', ['$scope', '$http', function($scope, $http) {
 
     $scope.twitchInfo = []; // store info for twitch users
+    
+    // user names selected from the freecodecamp assignment and randomly
     $scope.names = ["freecodecamp", "storbeck", "terakilobyte", "habathcx","RobotCaleb","thomasballinger","noobs2ninjas","beohoff", "ogamingsc2", "sheevergaming", "cretetion", "c9sneaky", "domingo", "starladder5", "amazhs", "mlg", "mccool12345678", "skuart_tv", "dimmerhook", "girlsluvlps"];
 
-    function asyncCollect() {
+    var asyncCollect = function() {
 
         $scope.names.forEach(function(val, idx) {
 
@@ -35,6 +37,7 @@ myApp.controller('mainController', ['$scope', '$http', function($scope, $http) {
                 displayName: ''
             }
 
+            // get the stream name data
             $http.jsonp('https://api.twitch.tv/kraken/streams/{0}?callback=JSON_CALLBACK'.lp_format(val))
                 .success(function(data) {
                     if (!!data.stream) {
@@ -45,6 +48,8 @@ myApp.controller('mainController', ['$scope', '$http', function($scope, $http) {
                 .error(function(err) {
                     l(`in error ${err}`);
                 })
+            
+            // get logo and display name information
             $http.jsonp('https://api.twitch.tv/kraken/channels/{0}?callback=JSON_CALLBACK'.lp_format(val))
                 .success(function(data) {
                     current.logo = data.logo;
@@ -59,25 +64,5 @@ myApp.controller('mainController', ['$scope', '$http', function($scope, $http) {
                 })
 
         });
-    }
-    asyncCollect();
-
-    // create array for the info so ngreapeat can traverse it
-    $scope.gettwitchInfo = function(type) {
-        if (type === 'all') {
-            return $.map($scope.twitchInfo, function(elem, idx) {
-                return [elem];
-            });
-        }
-        else if (type === 'online') {
-            return $.map($scope.twitchInfoOnline, function(elem, idx) {
-                return [elem];
-            });
-        }
-        else if (type === 'offline') {
-            return $.map($scope.twitchInfoOffline, function(elem, idx) {
-                return [elem];
-            });
-        }
-    }
+    }(); // execute immediatley
 }]);
